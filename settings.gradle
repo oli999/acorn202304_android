@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Hello"
+include ':hello2'
+include ':step01activity'
+include ':step01activity2'
+include ':step01example'
+include ':step02listview'
+include ':step03customadapter'
+include ':step04httprequest'
