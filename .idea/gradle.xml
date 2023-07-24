@@ -16,7 +16,9 @@
             <option value="$PROJECT_DIR$/step01example" />
             <option value="$PROJECT_DIR$/step02listview" />
             <option value="$PROJECT_DIR$/step03customadapter" />
+            <option value="$PROJECT_DIR$/step04example" />
             <option value="$PROJECT_DIR$/step04httprequest" />
+            <option value="$PROJECT_DIR$/step04httprequest2" />
           </set>
         </option>
       </GradleProjectSettings>
