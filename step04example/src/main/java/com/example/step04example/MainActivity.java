@@ -6,6 +6,10 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,13 +42,103 @@ public class MainActivity extends AppCompatActivity implements Util.RequestListe
                     map,
                     this);
         });
+        //두번째 버튼도 리스너 등록하기
+        Button sendBtn2=(Button) findViewById(R.id.sendBtn2);
+        sendBtn2.setOnClickListener(view->{
+            //입력한 문자열
+            String msg=inputMsg.getText().toString();
+            //요청 파라미터로 전달하기 위해 "msg" 라는 키값으로 Map 에 담는다.
+            Map<String, String> map=new HashMap<>();
+            map.put("msg", msg);
+            Util.sendPostRequest(1,
+                    "http://192.168.0.31:9000/boot07/android/tweet2",
+                    map,
+                    this);
+        });
+        //세번째 버튼도 리스너 등록하기
+        Button sendBtn3=(Button) findViewById(R.id.sendBtn3);
+        sendBtn3.setOnClickListener(view->{
+            //입력한 문자열
+            String msg=inputMsg.getText().toString();
+            //요청 파라미터로 전달하기 위해 "msg" 라는 키값으로 Map 에 담는다.
+            Map<String, String> map=new HashMap<>();
+            map.put("msg", msg);
+            Util.sendGetRequest(2,
+                    "http://192.168.0.31:9000/boot07/android/tweet3",
+                    map,
+                    this);
+        });
+
+        Button listBtn=findViewById(R.id.listBtn);
+        listBtn.setOnClickListener(view->{
+            Util.sendGetRequest(3,
+                    "http://192.168.0.31:9000/boot07/android/list",
+                    null,
+                    this);
+        });
     }
 
     @Override
     public void onSuccess(int requestId, Map<String, Object> result) {
         if(requestId == 0){
+            //서버가 응답한 문자열
             String data=(String)result.get("data");
             editText.setText(data);
+        }else if(requestId == 1){
+            String data=(String)result.get("data");
+            //data 는 json 문자열이다.
+            //editText.setText(data);
+
+            //{"isSuccess":true} 형식의 json 문자열은 JSONObject 객체를 이용해서 원하는 데이터를 추출할수 있다.
+            try {
+                //JSONObject 를 생성해서
+                JSONObject obj=new JSONObject(data);
+                //"isSuccess" 라는 키값으로 저장된  true 라는 boolean type 데이터 얻어내기
+                boolean isSuccess = obj.getBoolean("isSuccess");
+                editText.setText(Boolean.toString(isSuccess));
+
+            } catch (JSONException e) {
+                //data 가 json 형식에 어긋나면 예외가 발생한다.
+                editText.setText(e.getMessage());
+            }
+        } else if (requestId == 2) {
+            String data=(String)result.get("data");
+            //data 는 [] 형식의 json 문자열이다.  [] 형식의 json 문자열은 JSONArray 객체를 활용한다.
+            try {
+                JSONArray arr=new JSONArray(data);
+                //반복문 돌면서
+                for(int i=0; i<arr.length(); i++){
+                    //i번째 방에 있는 String type 을 얻어내서
+                    String tmp=arr.getString(i);
+                    //EditText 객체에 출력한다.
+                    editText.append(tmp+"\n");
+                }
+            } catch (JSONException e) {
+                //data 가 json 형식에 어긋나면 예외가 발생한다.
+                editText.setText(e.getMessage());
+            }
+
+        } else if (requestId == 3) {
+            // data 는 [{}, {}, {}, ... ] 형식의 json 문자열이다.
+            String data=(String)result.get("data");
+            // [] 형식의 문자열이기 때문에 JSONArray 객체를 생성한다.
+            try {
+                JSONArray arr=new JSONArray(data);
+                for(int i=0; i<arr.length(); i++){
+                    // {"num":1, "writer":"xxx", "title":"xxx",... }
+                    JSONObject obj=arr.getJSONObject(i);
+                    //글번호
+                    int num=obj.getInt("num");
+                    //작성자
+                    String writer=obj.getString("writer");
+                    //제목
+                    String title=obj.getString("title");
+                    //출력
+                    editText.append(num+" | "+writer+" | "+title+" \n");
+                }
+            } catch (JSONException e) {
+                editText.setText(e.getMessage());
+            }
         }
     }
 
