@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:name="com.example.step05fragment.MyFragment"
+        android:id="@+id/fragment1"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="리셋"
+        android:id="@+id/resetBtn"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이동"
+        android:id="@+id/moveBtn"/>
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.step05fragment.MyFragment"
+        android:id="@+id/fragment2"/>
+</LinearLayout>
