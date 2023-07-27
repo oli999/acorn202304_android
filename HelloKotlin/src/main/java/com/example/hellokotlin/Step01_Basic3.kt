@@ -1,5 +1,7 @@
 package com.example.hellokotlin
 
+import java.util.Scanner
+
 /*
     Kotlin 에서의 배열과 반복문
  */

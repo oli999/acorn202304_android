@@ -23,8 +23,6 @@
             <option value="$PROJECT_DIR$/step04httprequest2" />
             <option value="$PROJECT_DIR$/step05fragment" />
             <option value="$PROJECT_DIR$/step05fragment2" />
-            <option value="$PROJECT_DIR$/test" />
-            <option value="$PROJECT_DIR$/test2" />
           </set>
         </option>
       </GradleProjectSettings>
