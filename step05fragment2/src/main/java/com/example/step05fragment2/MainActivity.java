@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     /*
-        우상단 "옵션메뉴" 를 만들고 싶으면 onCreateOptionMenu() 메소드를 오버라이딩해서
-        Menu 를 구성하면 된다.
-     */
+            우상단 "옵션메뉴" 를 만들고 싶으면 onCreateOptionMenu() 메소드를 오버라이딩해서
+            Menu 를 구성하면 된다.
+         */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //res/menu/menu_main.xml 문서를 활용해서 메뉴 아이템 구성하기
