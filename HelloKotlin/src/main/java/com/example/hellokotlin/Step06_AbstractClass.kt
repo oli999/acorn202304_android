@@ -54,6 +54,7 @@ fun main(){
     d=true
     d="kim"
     d=w3
+
 }
 
 

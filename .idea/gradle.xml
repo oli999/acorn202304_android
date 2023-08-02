@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/step05fragment2" />
             <option value="$PROJECT_DIR$/step06sharedpref" />
             <option value="$PROJECT_DIR$/step07sqlite" />
+            <option value="$PROJECT_DIR$/step07sqlite2" />
           </set>
         </option>
       </GradleProjectSettings>
