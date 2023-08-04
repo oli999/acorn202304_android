@@ -43,4 +43,7 @@ fun main(){
     c2.drive()
 
     Ship()
+
+    var c3:YourCar? = null
+    c3?.drive()
 }
