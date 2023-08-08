@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/step07sqlite" />
             <option value="$PROJECT_DIR$/step07sqlite2" />
             <option value="$PROJECT_DIR$/step08customview" />
+            <option value="$PROJECT_DIR$/step08gameview" />
           </set>
         </option>
       </GradleProjectSettings>

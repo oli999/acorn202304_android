@@ -13,7 +13,7 @@ import android.view.View as View
     - 적절한 생성자를 정의한다.
     - onDraw() 메소드를 오버라이드 해서 화면을 구성한다.
  */
-class MyView(context: Context, attrs:AttributeSet): View(context, attrs) {
+class MyView @JvmOverloads constructor(context: Context, attrs:AttributeSet?=null): View(context, attrs) {
 
     //배열에 미리 색상을 준비해 놓는다
     val colors:Array<Int> = arrayOf(Color.GREEN, Color.YELLOW, Color.BLUE)
