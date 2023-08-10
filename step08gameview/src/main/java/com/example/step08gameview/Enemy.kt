@@ -6,5 +6,8 @@ data class Enemy(
     var type:Int=0, // 적기의 type  0 는 silver, 1 은 gold
     var isDead:Boolean=false, //화면에서 제거할지 여부
     var energy:Int=0, // 에너지
-    var imageIndex:Int=0 // 적기의 이미지 인덱스 (애니메이션 효과를 주기 위해)
+    var imageIndex:Int=0, // 적기의 이미지 인덱스 (애니메이션 효과를 주기 위해)
+    var isFall:Boolean=false, //추락중인지 여부
+    var angle:Int=0, //현재 회전 각도
+    var size:Int=0  //현재 크기
 )
