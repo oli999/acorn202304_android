@@ -66,9 +66,21 @@ class GameView @JvmOverloads constructor(
     var point=0
     //GameOver 버튼의 참조값을 저장할 필드
     var overBtn: Button?=null
+    //운석 이미지를 저장할 필드
+    lateinit var unsukImg:Bitmap
+    //운석의 x, y 좌표
+    var unsukX=0
+    var unsukY=0
+    //운석이 진행중인지 여부
+    var isUnsuk=false
 
     //게임 화면을 준비하는 함수
     fun init(){
+        //운석이미지를 로딩해서
+        var unsukImg=BitmapFactory.decodeResource(resources, R.drawable.unsuk)
+        //크기를 조절후 필드에 저장해 둔다.
+        this.unsukImg=Bitmap.createScaledBitmap(unsukImg, unitSize, unitSize, false);
+
         //사용할 이미지를 미리 로딩해서 참조값을 필드에 저장하기
         //원본 이미지
         var backImg:Bitmap = BitmapFactory.decodeResource(resources, R.drawable.backbg)
@@ -113,6 +125,8 @@ class GameView @JvmOverloads constructor(
         for(i in 0..4){
             enemyX[i] = unitSize/2 + unitSize*i
         }
+
+
 
         //Handler 객체를 init 블럭에서 생성해서 참조값을 필드에 넣어둔다.
         handler2=object:Handler() {
@@ -184,6 +198,13 @@ class GameView @JvmOverloads constructor(
             }
         }
 
+        //만일 운석이 진행중이면 운석을 그린다
+        if(isUnsuk){
+            canvas?.drawBitmap(unsukImg,
+                (unsukX-unitSize/2).toFloat(),
+                (unsukY-unitSize/2).toFloat(), null)
+        }
+
         //글자를 출력하기 위한 Paint 객체
         val textP= Paint()
         textP.color=Color.RED
@@ -224,6 +245,41 @@ class GameView @JvmOverloads constructor(
         //적기 관련 처리를 하는 함수
         enemyService()
         checkStrike()
+        unsukService()
+    }
+    //운석 관련 처리를 하는 함수
+    fun unsukService(){
+        // 0~499 사이의 랜덤한 숫자를 얻어내서
+        val ranNum = ran.nextInt(500)
+        //우연히 100 이 나왔을때 운석을 진행시킨다.
+        if(ranNum == 100 && !isUnsuk){
+            //드레곤의 x 좌표와 같은 선상에서 진행되도록
+            unsukX = dragonX
+            unsukY = -unitSize/2
+            //운석이 진행중이라고 표시한다.
+            isUnsuk=true
+        }
+        //만일 운석 진행중이 아니면 함수를 여기서 종료한다.
+        if(!isUnsuk)return
+        //미사일 속도의 2/3 속도로 진행
+        unsukY += missSpeed*2/3
+        if(unsukY > height+unitSize/2){ //아래쪽으로 완전히 진행했다면
+            //운석 진행 여부를 false 로 바꿔준다.
+            isUnsuk=false
+        }
+        //운석과 드레곤의 충돌검사
+        val isStrike = unsukX > dragonX-unitSize/2 &&
+                       unsukX < dragonX+unitSize/2 &&
+                       unsukY > dragonY-unitSize/2 &&
+                       unsukY < dragonY+unitSize/2
+        if(isStrike){
+            //Handler 객체에 메세지를 제거하는 메소드를 호출해서 Handler 를 멈추게한다.
+            handler2.removeMessages(0)
+            //효과음 재생
+            sManager?.playSound(GameActivity.SOUND_DIE)
+            //GameOver 버튼이 보이도록 한다.
+            overBtn?.isVisible=true
+        }
     }
 
     //드레곤의 충돌검사 및 적기와 미사일 충돌 검사 하기

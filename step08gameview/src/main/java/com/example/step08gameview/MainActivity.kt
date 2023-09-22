@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.off -> isMute=true
             R.id.on -> isMute=false
+            R.id.beer -> {
+                val intent=Intent(this, BeerActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
